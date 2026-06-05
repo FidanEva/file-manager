@@ -1,7 +1,5 @@
 # FileVault - React File Previewer
 
-[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/FidanEva/file-manager)
-
 FileVault is a comprehensive, in-browser file previewer built with React, TypeScript, and Vite. It allows users to upload multiple files via drag-and-drop and instantly view their contents without needing any server-side processing. It features a clean, modern UI with both list and grid views, and supports a wide array of file formats.
 
 ## Key Features
