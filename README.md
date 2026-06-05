@@ -1,73 +1,83 @@
-# React + TypeScript + Vite
+# FileVault - React File Previewer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/FidanEva/file-manager)
 
-Currently, two official plugins are available:
+FileVault is a comprehensive, in-browser file previewer built with React, TypeScript, and Vite. It allows users to upload multiple files via drag-and-drop and instantly view their contents without needing any server-side processing. It features a clean, modern UI with both list and grid views, and supports a wide array of file formats.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Key Features
 
-## React Compiler
+- **Drag-and-Drop Uploader:** An intuitive interface for uploading one or more files.
+- **Dual View Modes:** Switch between a detailed list view with inline previews and a compact grid view with modal previews.
+- **Extensive File Support:** Preview a wide variety of file types directly in the browser:
+  - **Documents:**
+    - **PDF:** Complete with page navigation and zoom controls (`react-pdf`).
+    - **DOCX:** Renders `.docx` files as HTML (`mammoth.js`).
+    - **XLSX / ODS:** Displays spreadsheet data in a paginated table view with support for multiple sheets (`xlsx`).
+    - **PPTX / Legacy Office:** Provides a user-friendly fallback with download options.
+  - **Images:** Native rendering for formats like PNG, JPG, GIF, WebP, with a zoom-in/out feature.
+  - **Media:**
+    - **Video:** Playback for MP4, WebM, MOV, and other browser-supported formats.
+    - **Audio:** An embedded player for MP3, WAV, OGG, and more.
+  - **Data & Code:**
+    - **CSV / TSV:** Renders data in a paginated table.
+    - **JSON:** Displays data in an interactive, collapsible tree view.
+    - **Code:** Syntax highlighting for numerous languages (JS, Python, TS, CSS, etc.) with line numbers (`highlight.js`).
+    - **SVG:** Shows both the rendered graphic and its underlying source code side-by-side.
+  - **Archives:** Recognizes ZIP, RAR, 7z, etc., and provides a download prompt.
+- **Client-Side Processing:** All file parsing and rendering happen directly in the user's browser for privacy and speed.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Technology Stack
 
-## Expanding the ESLint configuration
+- **Frontend:** React, TypeScript
+- **Build Tool:** Vite
+- **File Handling & Previewing:**
+  - `react-dropzone`: For the drag-and-drop upload functionality.
+  - `react-pdf`: For rendering PDF documents.
+  - `mammoth`: For converting `.docx` files to HTML.
+  - `xlsx`: For parsing and reading spreadsheet files.
+  - `highlight.js`: For code syntax highlighting.
+- **Styling:** Plain CSS with Custom Properties for easy theming.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Project Structure
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The project is organized to separate concerns, making it easy to extend and maintain.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── pages/          # Main application page component.
+├── upload/         # FileUploader component using react-dropzone.
+├── preview/        # FilePreview component that routes to the correct viewer.
+├── viewers/        # Individual components for rendering each file type (e.g., PdfViewer, CsvViewer).
+├── utils/          # Helper functions (file type detection, size formatting).
+├── types/          # Shared TypeScript type definitions.
+├── App.css         # All application styles.
+└── main.tsx        # Application entry point.
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+To run this project locally, follow these steps:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/FidanEva/file-manager.git
+    cd file-manager
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+    The application will be available at `http://localhost:5173`.
+
+### Available Scripts
+
+-   `npm run dev`: Starts the Vite development server with Hot Module Replacement.
+-   `npm run build`: Compiles and bundles the application for production.
+-   `npm run lint`: Lints the TypeScript and TSX files.
+-   `npm run preview`: Serves the production build locally to preview it.
